@@ -6,10 +6,12 @@ public class Node {
     private double longitude;
     private ArrayList<Node> neighbours;
 
-
+    //Constructor that runs in main file
     public Node() {
         {
+            //Build the arraylist we are using
             ArrayList<Node> graph = createGraph();
+            //Print the arraylist we made above
             ShowNodesAndLinks(graph);
 
         }
@@ -23,6 +25,7 @@ public class Node {
 
     }
 
+    //Common set/get
     private String getName() {
         return name;
     }
@@ -54,12 +57,9 @@ public class Node {
     private void addNeighbour(Node neighbour) {
         this.neighbours.add(neighbour);
     }
-    /*
-for (type var : array)
-    {
-        statements using var;
-    }
-*/
+    //End of common set/get
+
+    //Prints all stations made in createGraph()
     private void ShowNodesAndLinks(ArrayList<Node> graph) {
         for (Node destination : graph) {
             System.out.println(destination.getName());
@@ -70,6 +70,7 @@ for (type var : array)
             }
     }
 
+    //Creates all nodes for the program
     private ArrayList<Node> createGraph() {
         //Skapar en nod för varje tågstation
         Node hki = new Node("Helsingfors", 60.1640504, 24.7600896);
