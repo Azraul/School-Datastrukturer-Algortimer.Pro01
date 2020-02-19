@@ -6,14 +6,10 @@ public class Node {
     private double longitude;
     private ArrayList<Node> neighbours;
 
-    //Constructor that runs in main file
+    //Constructor that runs in main file that runs VR app
     public Node() {
         {
-            //Build the arraylist we are using
-            ArrayList<Node> graph = createGraph();
-            //Print the arraylist we made above
-            ShowNodesAndLinks(graph);
-
+            VRApp();
         }
     }
 
@@ -22,6 +18,20 @@ public class Node {
         setLatitude(latitude);
         setLongitude(longitude);
         this.neighbours = new ArrayList<Node>();
+
+    }
+
+    private void VRApp() {
+
+        //Build the arraylist we are using
+        ArrayList<Node> graph = createGraph();
+        //Print the arraylist we made above
+        ShowNodesAndLinks(graph);
+        //Trying the calculate distance
+        Node one = graph.get(1);
+        Node two = graph.get(2);
+        double km = calculateH(one, two);
+        System.out.println("This is the distance between " + one.getName() + " and " + two.getName() + " " + km + " km");
 
     }
 
@@ -63,11 +73,32 @@ public class Node {
     private void ShowNodesAndLinks(ArrayList<Node> graph) {
         for (Node destination : graph) {
             System.out.println(destination.getName());
-            for (Node neighbour: destination.getNeighbours()
-                 ) {
-                System.out.println("\t"+neighbour.getName());
+            for (Node neighbour : destination.getNeighbours()
+            ) {
+                System.out.println("\t" + neighbour.getName());
             }
-            }
+        }
+    }
+
+    private double calculateH(Node station1, Node station2) {
+        double km = getDistance(station1.getLongitude(), station1.getLatitude(), station2.getLongitude(), station2.getLatitude());
+        return km;
+    }
+
+    private double getDistance(double lon1, double lat1, double lon2, double lat2) {
+        lon1 = lon1 * Math.PI / 180.0;
+        lat1 = lat1 * Math.PI / 180.0;
+        lon2 = lon2 * Math.PI / 180.0;
+        lat2 = lat2 * Math.PI / 180.0;
+
+
+        double dlon = lon2 - lon1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double km = 6367 * c;
+
+        return km;
     }
 
     //Creates all nodes for the program
