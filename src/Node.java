@@ -1,3 +1,5 @@
+import javax.crypto.spec.PSource;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
 public class Node {
@@ -36,6 +38,7 @@ public class Node {
     }
 
     //Common set/get
+    //TODO Can you region this?
     private String getName() {
         return name;
     }
@@ -80,11 +83,13 @@ public class Node {
         }
     }
 
+    //Takes two stations and compares their distance
+    //TODO: make sure they are neighbours
     private double calculateH(Node station1, Node station2) {
         double km = getDistance(station1.getLongitude(), station1.getLatitude(), station2.getLongitude(), station2.getLatitude());
         return km;
     }
-
+    //Does the actual math for distance calculating
     private double getDistance(double lon1, double lat1, double lon2, double lat2) {
         lon1 = lon1 * Math.PI / 180.0;
         lat1 = lat1 * Math.PI / 180.0;
@@ -99,6 +104,12 @@ public class Node {
         double km = 6367 * c;
 
         return km;
+    }
+    private double calculateG(Node start){
+        double G = 0;
+        Node current = start;
+
+        return G;
     }
 
     //Creates all nodes for the program
