@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Node {
+    static Scanner keyboard = new Scanner(System.in);
     private String name;
     private double latitude;
     private double longitude;
@@ -22,22 +24,53 @@ public class Node {
     }
 
     private void VRApp() {
+        Menu menu = new Menu();
         //Build the arraylist we are using
         ArrayList<Node> graph = createGraph();
-        //Print the arraylist we made above
-        ShowNodesAndLinks(graph);
-        //Trying the calculate distance
-        Node one = graph.get(1);
-        Node two = graph.get(4);
-        System.out.println(one.getName() + " = Source");
-        System.out.println(two.getName() + " = Destination");
-        ArrayList<Node> daway = getRoute(one, two);
-        System.out.println("This is da way:");
-        for (Node way : daway
-        ) {
-            System.out.println(way.getName());
-        }
+        int choice = 0;
+        menu.start();
+        while (choice != 9) {
+            menu.main();
+            switch (validateScanner(choice)) {
+                case 1:
+                    menu.showData();
+                    ShowNodesAndLinks(graph);
+                    break;
+                case 2:
+                    menu.newRoute();
+                    for (Node node : graph
+                    ) {
+                        System.out.println(graph.indexOf(node) + "\t" + node.getName());
+                    }
+                    int i = 0;
+                    menu.pickSource();
+                    Node one = graph.get(validateScanner(i));
+                    menu.choiceSource(one.getName());
+                    menu.pickDestination();
+                    Node two = graph.get(validateScanner(i));
+                    if (one == two){
+                        menu.troll(one.getName());
+                    } else{
+                        menu.choiceDestination(two.getName());
+                        ArrayList<Node> suggested = getRoute(one, two);
+                        menu.travel();
+                        System.out.println(one.getName());
+                        for (Node way : suggested
+                        ) {
+                            System.out.println(way.getName());
+                        }
+                        menu.bookHere();
+                    }
 
+                    break;
+                case 9:
+                    menu.quit();
+                    System.exit(0);
+                default:
+                    menu.start();
+                    break;
+            }
+        }
     }
 
     //region [map data]
@@ -220,6 +253,61 @@ public class Node {
             current = current.previous;
         }
         return route;
+    }
+
+    //endregion
+    //region [scanner validators]
+    int validateScanner(int choice) {
+        boolean checkForInt = false;
+        do {
+            while (!keyboard.hasNextInt()) {
+                System.out.println("Enter a whole number");
+                keyboard.next();
+            }
+            choice = keyboard.nextInt();
+            checkForInt = true;
+        } while (!checkForInt);
+        return choice;
+    }
+
+    String validateScanner(String name) {
+        boolean checkForString = false;
+        String usernamePattern = "[a-zA-Z]+";
+        do {
+            while (!keyboard.hasNext(usernamePattern)) {
+                System.out.println("International letters only, sorry!");
+                keyboard.next();
+            }
+            name = keyboard.next();
+            checkForString = true;
+        } while (!checkForString);
+        return name;
+    }
+
+    long validateScanner(long account) {
+        boolean checkForLong = false;
+        do {
+            while (!keyboard.hasNextLong()) {
+                System.out.println("Numbers only");
+                keyboard.next();
+            }
+            account = keyboard.nextLong();
+            checkForLong = true;
+        } while (!checkForLong);
+        return account;
+    }
+
+    double validateScanner(double n) {
+        boolean checkForDouble = false;
+        do {
+            while (!keyboard.hasNextDouble()) {
+                System.out.println("Decimal number only (Ex: 3.14)");
+                keyboard.next();
+            }
+            n = keyboard.nextDouble();
+            checkForDouble = true;
+        } while (!checkForDouble);
+        return n;
     }
     //endregion
 
