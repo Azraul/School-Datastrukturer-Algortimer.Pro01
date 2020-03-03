@@ -12,5 +12,5 @@ Bygg som ett vanligt java projekt.
 ![image of program running](images/program.gif)
 
 ## Contribution
-School project, constructive critisim is welcome!
+School project, constructive criticism is welcome!
 
