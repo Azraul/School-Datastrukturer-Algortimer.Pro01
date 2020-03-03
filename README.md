@@ -9,7 +9,7 @@ Uppgift
 Bygg som ett vanligt java projekt.
 
 ## Körning
-<img src"images/.program.gif" alt="shows program running">
+![image of program running](images/.program.gif)
 
 ## Contribution
 School project, constructive critisim is welcome!
