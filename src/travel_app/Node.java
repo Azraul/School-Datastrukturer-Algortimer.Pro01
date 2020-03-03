@@ -1,8 +1,12 @@
+package travel_app;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static travel_app.ValidateScanner.validateScanner.validateScanner;
+
 public class Node {
-    static Scanner keyboard = new Scanner(System.in);
+    Scanner keyboard = new Scanner(System.in);
     private String name;
     private double latitude;
     private double longitude;
@@ -29,9 +33,10 @@ public class Node {
         ArrayList<Node> graph = createGraph();
         int choice = 0;
         menu.start();
-        while (choice != 9) {
+        while (true) {
             menu.main();
-            switch (validateScanner(choice)) {
+            choice = validateScanner();
+            switch (choice) {
                 case 1:
                     menu.showData();
                     ShowNodesAndLinks(graph);
@@ -42,12 +47,12 @@ public class Node {
                     ) {
                         System.out.println(graph.indexOf(node) + "\t" + node.getName());
                     }
-                    int i = 0;
+                    Node one, two;
                     menu.pickSource();
-                    Node one = graph.get(validateScanner(i));
+                    one = graph.get(validDestination(graph.size()));
                     menu.choiceSource(one.getName());
                     menu.pickDestination();
-                    Node two = graph.get(validateScanner(i));
+                    two = graph.get(validDestination(graph.size()));
                     if (one == two){
                         menu.troll(one.getName());
                     } else{
@@ -61,7 +66,6 @@ public class Node {
                         }
                         menu.bookHere();
                     }
-
                     break;
                 case 9:
                     menu.quit();
@@ -167,6 +171,20 @@ public class Node {
     }
 
     //endregion
+    //region [Checks that destination exists in graph]
+    private int validDestination(int graphSize){
+        int i;
+        //Array starts at 0
+        graphSize = graphSize-1;
+        do {
+            i = validateScanner();
+            if (i>graphSize){
+            System.out.println("Tyvärr finns inte stationen ni angav, vänligen försök igen");
+            }
+        } while (i>graphSize);
+        return i;
+    }
+    //endregion
     //region [getDistance]
     private double getDistance(double lon1, double lat1, double lon2, double lat2) {
         lon1 = lon1 * Math.PI / 180.0;
@@ -256,59 +274,4 @@ public class Node {
     }
 
     //endregion
-    //region [scanner validators]
-    int validateScanner(int choice) {
-        boolean checkForInt = false;
-        do {
-            while (!keyboard.hasNextInt()) {
-                System.out.println("Enter a whole number");
-                keyboard.next();
-            }
-            choice = keyboard.nextInt();
-            checkForInt = true;
-        } while (!checkForInt);
-        return choice;
-    }
-
-    String validateScanner(String name) {
-        boolean checkForString = false;
-        String usernamePattern = "[a-zA-Z]+";
-        do {
-            while (!keyboard.hasNext(usernamePattern)) {
-                System.out.println("International letters only, sorry!");
-                keyboard.next();
-            }
-            name = keyboard.next();
-            checkForString = true;
-        } while (!checkForString);
-        return name;
-    }
-
-    long validateScanner(long account) {
-        boolean checkForLong = false;
-        do {
-            while (!keyboard.hasNextLong()) {
-                System.out.println("Numbers only");
-                keyboard.next();
-            }
-            account = keyboard.nextLong();
-            checkForLong = true;
-        } while (!checkForLong);
-        return account;
-    }
-
-    double validateScanner(double n) {
-        boolean checkForDouble = false;
-        do {
-            while (!keyboard.hasNextDouble()) {
-                System.out.println("Decimal number only (Ex: 3.14)");
-                keyboard.next();
-            }
-            n = keyboard.nextDouble();
-            checkForDouble = true;
-        } while (!checkForDouble);
-        return n;
-    }
-    //endregion
-
 }

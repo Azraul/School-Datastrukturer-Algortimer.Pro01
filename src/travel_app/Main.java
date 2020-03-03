@@ -1,3 +1,5 @@
+package travel_app;
+
 /******************************************************
  * ***  By Kristoffer Kuvaja                        ***
  * ***  Arcada 2020                                 ***
