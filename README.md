@@ -3,7 +3,7 @@
 Projekt 1 är ett java program som implimenterar A-star algoritmen för att hitta kortaste resvägen mellan olika stationer.
 
 Uppgift
-> [Projekt Beskrivning](projekt_beskrivning.pdf)
+> Gör ett program som beräknar kortaste vägen med angiven data.
 
 ## Installation
 Bygg som ett vanligt java projekt.
