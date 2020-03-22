@@ -1,12 +1,10 @@
 package travel_app;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static travel_app.ValidateScanner.validateScanner.validateScanner;
 
 public class Node {
-    Scanner keyboard = new Scanner(System.in);
     private String name;
     private double latitude;
     private double longitude;
@@ -24,14 +22,14 @@ public class Node {
         setName(destination);
         setLatitude(latitude);
         setLongitude(longitude);
-        this.neighbours = new ArrayList<>();
+        this.neighbours = new ArrayList<Node>();
     }
 
     private void VRApp() {
         Menu menu = new Menu();
         //Build the arraylist we are using
         ArrayList<Node> graph = createGraph();
-        int choice = 0;
+        int choice;
         menu.start();
         while (true) {
             menu.main();
@@ -227,8 +225,8 @@ public class Node {
     //endregion
     //region [getRoute method]
     ArrayList<Node> getRoute(Node source, Node destination) {
-        ArrayList<Node> candidates = new ArrayList<>();
-        ArrayList<Node> visited = new ArrayList<>();
+        ArrayList<Node> candidates = new ArrayList<Node>();
+        ArrayList<Node> visited = new ArrayList<Node>();
         Node current = source;
         boolean done = false;
 
@@ -263,7 +261,7 @@ public class Node {
                 candidates.remove(current);
             }
         }
-        ArrayList<Node> route = new ArrayList<>();
+        ArrayList<Node> route = new ArrayList<Node>();
         current = destination;
 
         while (current != source) {
